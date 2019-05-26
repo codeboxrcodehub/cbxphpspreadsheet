@@ -14,7 +14,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       CBX PhpSpreadSheet Library
- * Plugin URI:        https://codeboxr.com/
+ * Plugin URI:        https://codeboxr.com/php-spreadsheet-library-wordpress-plugin/
  * Description:       A pure PHP library for reading and writing spreadsheet files https://phpspreadsheet.readthedocs.io/
  * Version:           1.0.0
  * Author:            Codeboxr
@@ -46,6 +46,8 @@ class CBXPhpSpreadSheet {
 	function __construct() {
 		//load text domain
 		load_plugin_textdomain('cbxphpspreadsheet', false, dirname(plugin_basename(__FILE__)) . '/languages/');
+
+		add_filter( 'plugin_row_meta', array($this, 'plugin_row_meta'), 10, 2 );
 	}
 
 	/**
@@ -154,6 +156,28 @@ class CBXPhpSpreadSheet {
 		}
 		return false;
 	}//end method php_gd_enabled_check
+
+	/**
+	 * Plugin support and doc page url
+	 *
+	 * @param $links
+	 * @param $file
+	 *
+	 * @return array
+	 */
+	public function plugin_row_meta( $links, $file ) {
+
+		if ( strpos( $file, 'cbxphpspreadsheet.php' ) !== false ) {
+			$new_links = array(
+				'support' => '<a href="https://codeboxr.com/php-spreadsheet-library-wordpress-plugin/" target="_blank">'.esc_html__('Support', 'cbxphpspreadsheet').'</a>',
+				'doc' => '<a href="https://phpspreadsheet.readthedocs.io/en/latest/" target="_blank">'.esc_html__('PHP Spreadsheet Doc', 'cbxphpspreadsheet').'</a>'
+			);
+
+			$links = array_merge( $links, $new_links );
+		}
+
+		return $links;
+	}
 
 }//end method CBXPhpSpreadSheet
 

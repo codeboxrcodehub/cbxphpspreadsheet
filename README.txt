@@ -38,7 +38,7 @@ if ( defined('CBXPHPSPREADSHEET_PLUGIN_NAME') && file_exists( CBXPHPSPREADSHEET_
 	//now take instance
 	$objPHPExcel = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
 
-	//do whatever you need todo
+	//do whatever you need to do
 }
 `
 
