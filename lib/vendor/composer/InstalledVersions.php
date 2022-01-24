@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'd9d712b82481af312ac8f2332cfc95bafc2966bb',
+    'reference' => '732c6e68849b055d2e9403d768a9ffe1f1a3e6ff',
     'name' => '__root__',
   ),
   'versions' => 
@@ -42,7 +42,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'd9d712b82481af312ac8f2332cfc95bafc2966bb',
+      'reference' => '732c6e68849b055d2e9403d768a9ffe1f1a3e6ff',
     ),
     'ezyang/htmlpurifier' => 
     array (
