@@ -1,8 +1,8 @@
 === CBX PhpSpreadSheet Library ===
 Contributors: codeboxr,manchumahara
 Requires at least: 3.5
-Tested up to: 5.8.3
-Stable tag: 1.0.2
+Tested up to: 6.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,9 @@ if ( defined('CBXPHPSPREADSHEET_PLUGIN_NAME') && file_exists( CBXPHPSPREADSHEET_
 1. yet to come
 
 == Changelog ==
+
+= 1.0.3 =
+* Updated the phpspreadsheet package to latest V1.21.0
 
 = 1.0.2 =
 * Updated the phpspreadsheet package to latest V1.21.0 
