@@ -1,5 +1,7 @@
 {
     "require": {
-        "phpoffice/phpspreadsheet": "^1.21"
+        "phpoffice/phpspreadsheet": "^1.29",
+        "myclabs/php-enum": "^1.8",
+        "symfony/polyfill-mbstring": "^1.28"
     }
 }

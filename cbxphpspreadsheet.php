@@ -16,7 +16,7 @@
  * Plugin Name:       CBX PhpSpreadSheet Library
  * Plugin URI:        https://codeboxr.com/php-spreadsheet-library-wordpress-plugin/
  * Description:       A pure PHP library for reading and writing spreadsheet files https://phpspreadsheet.readthedocs.io/
- * Version:           1.0.3
+ * Version:           1.0.4
  * Author:            Codeboxr
  * Author URI:        https://github.com/PHPOffice/PhpSpreadsheet
  * License:           GPL-2.0+
@@ -31,7 +31,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 defined( 'CBXPHPSPREADSHEET_PLUGIN_NAME' ) or define( 'CBXPHPSPREADSHEET_PLUGIN_NAME', 'cbxphpspreadsheet' );
-defined( 'CBXPHPSPREADSHEET_PLUGIN_VERSION' ) or define( 'CBXPHPSPREADSHEET_PLUGIN_VERSION', '1.0.3' );
+defined( 'CBXPHPSPREADSHEET_PLUGIN_VERSION' ) or define( 'CBXPHPSPREADSHEET_PLUGIN_VERSION', '1.0.4' );
 defined( 'CBXPHPSPREADSHEET_BASE_NAME' ) or define( 'CBXPHPSPREADSHEET_BASE_NAME', plugin_basename( __FILE__ ) );
 defined( 'CBXPHPSPREADSHEET_ROOT_PATH' ) or define( 'CBXPHPSPREADSHEET_ROOT_PATH', plugin_dir_path( __FILE__ ) );
 defined( 'CBXPHPSPREADSHEET_ROOT_URL' ) or define( 'CBXPHPSPREADSHEET_ROOT_URL', plugin_dir_url( __FILE__ ) );
@@ -55,7 +55,7 @@ class CBXPhpSpreadSheet {
 	 */
 	public static function activation() {
 		/*$requirements = array(
-			'PHP 5.6.0' => version_compare(PHP_VERSION, '5.6.0', '>='),
+			'PHP 7.4.0' => version_compare(PHP_VERSION, '7.4.0', '>='),
 			'PHP extension XML' => extension_loaded('xml'),
 			'PHP extension xmlwriter' => extension_loaded('xmlwriter'),
 			'PHP extension mbstring' => extension_loaded('mbstring'),
@@ -71,7 +71,7 @@ class CBXPhpSpreadSheet {
 			deactivate_plugins(__FILE__);
 
 			// Throw an error in the wordpress admin console
-			$error_message = __('This plugin requires PHP version 5.6 or newer', 'cbxphpspreadsheet');
+			$error_message = __('This plugin requires PHP version 7.4 or newer', 'cbxphpspreadsheet');
 			die($error_message);
 		}
 
@@ -114,7 +114,7 @@ class CBXPhpSpreadSheet {
 	 * @return bool
 	 */
 	public static function php_version_check(){
-		if (version_compare(PHP_VERSION, '5.6.0', '<')) {
+		if (version_compare(PHP_VERSION, '7.4.0', '<')) {
 			return false;
 		}
 
