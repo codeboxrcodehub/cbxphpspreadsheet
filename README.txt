@@ -1,8 +1,8 @@
 === CBX PhpSpreadSheet Library ===
-Contributors: codeboxr,manchumahara
+Contributors: codeboxr,manchumahara, moojomoore
 Requires at least: 3.5
-Tested up to: 6.0.2
-Stable tag: 1.0.3
+Tested up to: 6.3.1
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,7 @@ Software requirements
 
 The following software is required to develop using PhpSpreadsheet:
 
- * PHP version 5.6 or newer
+ * PHP version 7.4 or newer
  * PHP extension php_zip enabled
  * PHP extension php_xml enabled
  * PHP extension php_gd2 enabled (if not compiled in)
@@ -58,6 +58,9 @@ if ( defined('CBXPHPSPREADSHEET_PLUGIN_NAME') && file_exists( CBXPHPSPREADSHEET_
 1. yet to come
 
 == Changelog ==
+
+= 1.0.4 =
+* Updated the phpspreadsheet package to latest V1.29.0
 
 = 1.0.3 =
 * Updated the phpspreadsheet package to latest V1.21.0
