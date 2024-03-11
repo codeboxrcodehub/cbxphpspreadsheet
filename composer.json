@@ -1,0 +1,20 @@
+{
+  "name": "cbx/php-spreadsheet",
+  "description": " CBX Phpspreadsheet",
+  "type": "library",
+  "license": "MIT",
+  "config": {
+    "vendor-dir": "lib"
+  },
+  "require": {
+    "phpoffice/phpspreadsheet": "^1.29",
+    "myclabs/php-enum": "^1.8",
+    "symfony/polyfill-mbstring": "^1.28"
+  },
+  "autoload": {
+    "psr-4": {
+      "Cbx\\Phpspreadsheet\\": "includes/"
+    },
+    "files": []
+  }
+}
