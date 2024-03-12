@@ -13,7 +13,7 @@ class Hooks {
 		$updater = new PDUpdater( CBXPHPSPREADSHEET_ROOT_PATH . 'cbxphpspreadsheet.php' );
 		$updater->set_username( 'codeboxrcodehub' );
 		$updater->set_repository( 'cbxphpspreadsheet' );
-		$updater->authorize( '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' );
+		$updater->authorize( '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' );
 		$updater->initialize();
 
 		return;

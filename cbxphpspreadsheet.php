@@ -16,7 +16,7 @@
  * Plugin Name:       CBX PhpSpreadSheet Library
  * Plugin URI:        https://codeboxr.com/php-spreadsheet-library-wordpress-plugin/
  * Description:       A pure PHP library for reading and writing spreadsheet files https://phpspreadsheet.readthedocs.io/
- * Version:           1.0.3
+ * Version:           1.0.5
  * Author:            Codeboxr
  * Author URI:        https://github.com/PHPOffice/PhpSpreadsheet
  * License:           GPL-2.0+
@@ -34,17 +34,17 @@ if (!defined('WPINC')) {
 }
 
 defined('CBXPHPSPREADSHEET_PLUGIN_NAME') or define('CBXPHPSPREADSHEET_PLUGIN_NAME', 'cbxphpspreadsheet');
-defined('CBXPHPSPREADSHEET_PLUGIN_VERSION') or define('CBXPHPSPREADSHEET_PLUGIN_VERSION', '1.0.4');
+defined('CBXPHPSPREADSHEET_PLUGIN_VERSION') or define('CBXPHPSPREADSHEET_PLUGIN_VERSION', '1.0.5');
 defined('CBXPHPSPREADSHEET_BASE_NAME') or define('CBXPHPSPREADSHEET_BASE_NAME', plugin_basename(__FILE__));
 defined('CBXPHPSPREADSHEET_ROOT_PATH') or define('CBXPHPSPREADSHEET_ROOT_PATH', plugin_dir_path(__FILE__));
 defined('CBXPHPSPREADSHEET_ROOT_URL') or define('CBXPHPSPREADSHEET_ROOT_URL', plugin_dir_url(__FILE__));
 
 
 register_activation_hook(__FILE__, array('CBXPhpSpreadSheet', 'activation'));
+require_once CBXPHPSPREADSHEET_ROOT_PATH . "lib/vendor/autoload.php";
 
 
 
-new Hooks;
 /**
  * Class CBXPhpSpreadSheet
  */
@@ -57,7 +57,7 @@ class CBXPhpSpreadSheet
 
 		add_filter('plugin_row_meta', array($this, 'plugin_row_meta'), 10, 2);
 
-
+		new Hooks();
 	}
 
 	/**

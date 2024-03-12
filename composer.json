@@ -4,7 +4,7 @@
   "type": "library",
   "license": "MIT",
   "config": {
-    "vendor-dir": "lib"
+    "vendor-dir": "lib/vendor"
   },
   "require": {
     "phpoffice/phpspreadsheet": "^1.29",
