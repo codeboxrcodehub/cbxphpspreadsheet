@@ -1,4 +1,4 @@
-=== CBX PhpSpreadSheet Library ===
+=== CBX Taxonomy Library ===
 Contributors: codeboxr, manchumahara
 Requires at least: 3.5
 Tested up to: 6.4.3

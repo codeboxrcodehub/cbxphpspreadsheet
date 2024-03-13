@@ -22,7 +22,8 @@ The plugin check php version, php_zip, php_xml and php_gd2 library compatible or
 
 How to use:
 
-``if ( defined('CBXPHPSPREADSHEET_PLUGIN_NAME') && file_exists( CBXPHPSPREADSHEET_ROOT_PATH . 'lib/vendor/autoload.php' ) ) {
+````
+if ( defined('CBXPHPSPREADSHEET_PLUGIN_NAME') && file_exists( CBXPHPSPREADSHEET_ROOT_PATH . 'lib/vendor/autoload.php' ) ) {
 
 	//Include PHPExcel
 	require_once( CBXPHPSPREADSHEET_ROOT_PATH . 'lib/vendor/autoload.php' );
@@ -31,7 +32,8 @@ How to use:
 	$objPHPExcel = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
 
 	//do whatever you need to do
-}``
+}
+````
 
 ## Installation
 
