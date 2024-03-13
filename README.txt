@@ -1,9 +1,9 @@
 === CBX PhpSpreadSheet Library ===
-Contributors: codeboxr,manchumahara, moojomoore
+Contributors: codeboxr, manchumahara
 Requires at least: 3.5
-Tested up to: 6.4.2
+Tested up to: 6.4.3
 Stable tag: 1.0.5
-License: GPLv2 or later
+License: MIT
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Open source PhpSpreadSheet php library released as wordpress plugin to use easily
@@ -50,17 +50,11 @@ if ( defined('CBXPHPSPREADSHEET_PLUGIN_NAME') && file_exists( CBXPHPSPREADSHEET_
 4. This plugin doesn't load any library by default, it doesn't create extra folder or menu.
 
 
-
-
-
-== Screenshots ==
-
-1. yet to come
-
 == Changelog ==
 
 = 1.0.5 =
 * Dependency vendor packages updated to latest
+* Github.com based updater
 
 = 1.0.4 =
 * Updated the phpspreadsheet package to latest V1.29.0

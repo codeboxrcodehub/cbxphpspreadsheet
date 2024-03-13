@@ -1,14 +1,6 @@
-=== CBX PhpSpreadSheet Library ===
-Contributors: codeboxr,manchumahara, moojomoore
-Requires at least: 3.5
-Tested up to: 6.4.2
-Stable tag: 1.0.5
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Open source PhpSpreadSheet php library released as WordPress plugin to use easily
 
-Open source PhpSpreadSheet php library released as wordpress plugin to use easily
-
-== Description ==
+## Description
 
 A pure [PHP library for reading and writing spreadsheet files](https://phpspreadsheet.readthedocs.io)
 
@@ -30,8 +22,8 @@ The plugin check php version, php_zip, php_xml and php_gd2 library compatible or
 
 How to use:
 
-`
-if ( defined('CBXPHPSPREADSHEET_PLUGIN_NAME') && file_exists( CBXPHPSPREADSHEET_ROOT_PATH . 'lib/vendor/autoload.php' ) ) {
+``if ( defined('CBXPHPSPREADSHEET_PLUGIN_NAME') && file_exists( CBXPHPSPREADSHEET_ROOT_PATH . 'lib/vendor/autoload.php' ) ) {
+
 	//Include PHPExcel
 	require_once( CBXPHPSPREADSHEET_ROOT_PATH . 'lib/vendor/autoload.php' );
 
@@ -39,40 +31,11 @@ if ( defined('CBXPHPSPREADSHEET_PLUGIN_NAME') && file_exists( CBXPHPSPREADSHEET_
 	$objPHPExcel = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
 
 	//do whatever you need to do
-}
-`
+}``
 
-== Installation ==
+## Installation
 
 1. Download the latest zip from here (https://github.com/codeboxrcodehub/cbxphpspreadsheet/releases)
 2. [WordPress has clear documentation about how to install a plugin].(https://codex.wordpress.org/Managing_Plugins)
 3. After install activate the plugin "CBX PhpSpreadSheet Library" through the 'Plugins' menu in WordPress
 4. This plugin doesn't load any library by default, it doesn't create extra folder or menu.
-
-
-
-
-
-== Screenshots ==
-
-1. yet to come
-
-== Changelog ==
-
-= 1.0.5 =
-* Dependency vendor packages updated to latest
-
-= 1.0.4 =
-* Updated the phpspreadsheet package to latest V1.29.0
-
-= 1.0.3 =
-* Updated the phpspreadsheet package to latest V1.21.0
-
-= 1.0.2 =
-* Updated the phpspreadsheet package to latest V1.21.0 
-
-= 1.0.1 =
-* Updated the phpspreadsheet package to latest
-
-= 1.0.0 =
-* First public release
