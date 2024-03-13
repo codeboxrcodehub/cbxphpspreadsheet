@@ -4,7 +4,7 @@ Requires at least: 3.5
 Tested up to: 6.4.3
 Stable tag: 1.0.5
 License: MIT
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://github.com/codeboxrcodehub/cbxphpspreadsheet/blob/master/LICENSE.txt
 
 Open source PhpSpreadSheet php library released as wordpress plugin to use easily
 
