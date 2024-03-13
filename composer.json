@@ -1,6 +1,6 @@
 {
   "name": "cbx/php-spreadsheet",
-  "description": " CBX Phpspreadsheet",
+  "description": "Phpspreadsheet library for WordPress",
   "type": "library",
   "license": "MIT",
   "config": {
