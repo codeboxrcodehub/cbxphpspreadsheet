@@ -39,3 +39,7 @@ How to use:
 2. [WordPress has clear documentation about how to install a plugin].(https://codex.wordpress.org/Managing_Plugins)
 3. After install activate the plugin "CBX PhpSpreadSheet Library" through the 'Plugins' menu in WordPress
 4. This plugin doesn't load any library by default, it doesn't create extra folder or menu.
+
+## Licence
+
+[MIT](https://github.com/codeboxrcodehub/cbxphpspreadsheet/blob/master/LICENSE.txt)
