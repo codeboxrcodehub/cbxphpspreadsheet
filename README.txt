@@ -1,8 +1,8 @@
-=== CBX Taxonomy Library ===
+=== CBX PhpSpreadSheet Library ===
 Contributors: codeboxr, manchumahara
 Requires at least: 3.5
-Tested up to: 6.4.3
-Stable tag: 1.0.5
+Tested up to: 6.6.2
+Stable tag: 1.0.6
 License: MIT
 License URI: https://github.com/codeboxrcodehub/cbxphpspreadsheet/blob/master/LICENSE.txt
 
@@ -51,6 +51,8 @@ if ( defined('CBXPHPSPREADSHEET_PLUGIN_NAME') && file_exists( CBXPHPSPREADSHEET_
 
 
 == Changelog ==
+= 1.0.6 =
+* Dependency vendor packages updated to latest
 
 = 1.0.5 =
 * Dependency vendor packages updated to latest
