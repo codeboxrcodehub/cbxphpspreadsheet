@@ -17,6 +17,7 @@
  * Plugin URI:        https://codeboxr.com/php-spreadsheet-library-wordpress-plugin/
  * Description:       A pure PHP library for reading and writing spreadsheet files https://phpspreadsheet.readthedocs.io/
  * Version:           1.0.6
+ * Requires PHP:      7.4
  * Author:            Codeboxr
  * Author URI:        https://github.com/PHPOffice/PhpSpreadsheet
  * License:           GPL-2.0+
