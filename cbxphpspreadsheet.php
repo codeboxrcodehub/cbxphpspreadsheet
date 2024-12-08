@@ -25,12 +25,10 @@
  * Domain Path:       /languages
  */
 
-// If this file is called directly, abort.
-
 use Cbx\Phpspreadsheet\Hooks;
 
 if (!defined('WPINC')) {
-	die;
+    die;
 }
 
 defined('CBXPHPSPREADSHEET_PLUGIN_NAME') or define('CBXPHPSPREADSHEET_PLUGIN_NAME', 'cbxphpspreadsheet');
@@ -39,175 +37,100 @@ defined('CBXPHPSPREADSHEET_BASE_NAME') or define('CBXPHPSPREADSHEET_BASE_NAME', 
 defined('CBXPHPSPREADSHEET_ROOT_PATH') or define('CBXPHPSPREADSHEET_ROOT_PATH', plugin_dir_path(__FILE__));
 defined('CBXPHPSPREADSHEET_ROOT_URL') or define('CBXPHPSPREADSHEET_ROOT_URL', plugin_dir_url(__FILE__));
 
-
-register_activation_hook(__FILE__, array('CBXPhpSpreadSheet', 'activation'));
+register_activation_hook(__FILE__, ['CBXPhpSpreadSheet', 'activation']);
 require_once CBXPHPSPREADSHEET_ROOT_PATH . "lib/vendor/autoload.php";
-
-
 
 /**
  * Class CBXPhpSpreadSheet
  */
 class CBXPhpSpreadSheet
 {
-	function __construct()
-	{
-		//load text domain
-		load_plugin_textdomain('cbxphpspreadsheet', false, dirname(plugin_basename(__FILE__)) . '/languages/');
+    public function __construct()
+    {
+        // Load text domain
+        load_plugin_textdomain('cbxphpspreadsheet', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 
-		add_filter('plugin_row_meta', array($this, 'plugin_row_meta'), 10, 2);
+        // Add custom row meta links
+        add_filter('plugin_row_meta', [$this, 'plugin_row_meta'], 10, 2);
 
-		new Hooks();
-	}
+        new Hooks();
+    }
 
-	/**
-	 * Activation hook
-	 */
-	public static function activation()
-	{
-		if (!CBXPhpSpreadSheet::php_version_check()) {
+    /**
+     * Activation hook
+     */
+    public static function activation()
+    {
+        $errors = [];
+        
+        if (!self::php_version_check()) {
+            $errors[] = __('This plugin requires PHP version 7.4 or newer.', 'cbxphpspreadsheet');
+        }
 
-			// Deactivate the plugin
-			deactivate_plugins(__FILE__);
+        if (!self::extension_check(['zip', 'xml', 'gd'])) {
+            $errors[] = __('This plugin requires PHP extensions: Zip, XML, and GD2.', 'cbxphpspreadsheet');
+        }
 
-			// Throw an error in the wordpress admin console
-			$error_message = __('This plugin requires PHP version 7.4 or newer', 'cbxphpspreadsheet');
-			die($error_message);
-		}
+        if (!empty($errors)) {
+            deactivate_plugins(plugin_basename(__FILE__));
+            wp_die(implode('<br>', $errors), __('Plugin Activation Error', 'cbxphpspreadsheet'), ['back_link' => true]);
+        }
+    }
 
+    /**
+     * Check PHP version compatibility
+     *
+     * @return bool
+     */
+    private static function php_version_check()
+    {
+        return version_compare(PHP_VERSION, '7.4.0', '>=');
+    }
 
-		if (!CBXPhpSpreadSheet::php_zip_enabled_check()) {
+    /**
+     * Check if required PHP extensions are enabled
+     *
+     * @param array $extensions
+     * @return bool
+     */
+    private static function extension_check($extensions)
+    {
+        foreach ($extensions as $extension) {
+            if (!extension_loaded($extension)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-			// Deactivate the plugin
-			deactivate_plugins(__FILE__);
+    /**
+     * Add support and documentation links to the plugin row meta
+     *
+     * @param array $links
+     * @param string $file
+     * @return array
+     */
+    public function plugin_row_meta($links, $file)
+    {
+        if (strpos($file, 'cbxphpspreadsheet.php') !== false) {
+            $new_links = [
+                'support' => '<a href="https://codeboxr.com/php-spreadsheet-library-wordpress-plugin/" target="_blank">' . esc_html__('Support', 'cbxphpspreadsheet') . '</a>',
+                'doc' => '<a href="https://phpspreadsheet.readthedocs.io/en/latest/" target="_blank">' . esc_html__('PHP Spreadsheet Doc', 'cbxphpspreadsheet') . '</a>',
+            ];
 
-			// Throw an error in the wordpress admin console
-			$error_message = __(
-				'This plugin requires PHP php_zip extension installed and enabled',
-				'cbxphpspreadsheet'
-			);
-			die($error_message);
-		}
+            $links = array_merge($links, $new_links);
+        }
 
-		if (!CBXPhpSpreadSheet::php_xml_enabled_check()) {
+        return $links;
+    }
+}
 
-			// Deactivate the plugin
-			deactivate_plugins(__FILE__);
-
-			// Throw an error in the wordpress admin console
-			$error_message = __(
-				'This plugin requires PHP php_xml extension installed and enabled',
-				'cbxphpspreadsheet'
-			);
-			die($error_message);
-		}
-
-		if (!CBXPhpSpreadSheet::php_gd_enabled_check()) {
-
-			// Deactivate the plugin
-			deactivate_plugins(__FILE__);
-
-			// Throw an error in the wordpress admin console
-			$error_message = __(
-				'This plugin requires PHP php_gd2 extension installed and enabled',
-				'cbxphpspreadsheet'
-			);
-			die($error_message);
-		}
-
-	}//end method activation
-
-	/**
-	 * PHP version compatibility check
-	 *
-	 * @return bool
-	 */
-	public static function php_version_check()
-	{
-		if (version_compare(PHP_VERSION, '7.4.0', '<')) {
-			return false;
-		}
-
-		return true;
-	}//end method php_version_check
-
-	/**
-	 * php_zip enabled check
-	 *
-	 * @return bool
-	 */
-	public static function php_zip_enabled_check()
-	{
-		if (extension_loaded('zip')) {
-			return true;
-		}
-
-		return false;
-	}//end method php_zip_enabled_check
-
-	/**
-	 * php_xml enabled check
-	 *
-	 * @return bool
-	 */
-	public static function php_xml_enabled_check()
-	{
-		if (extension_loaded('xml')) {
-			return true;
-		}
-
-		return false;
-	}//end method php_xml_enabled_check
-
-	/**
-	 * php_gd2 enabled check
-	 *
-	 * @return bool
-	 */
-	public static function php_gd_enabled_check()
-	{
-		if (extension_loaded('gd')) {
-			return true;
-		}
-
-		return false;
-	}//end method php_gd_enabled_check
-
-	/**
-	 * Plugin support and doc page url
-	 *
-	 * @param $links
-	 * @param $file
-	 *
-	 * @return array
-	 */
-	public function plugin_row_meta($links, $file)
-	{
-
-		if (strpos($file, 'cbxphpspreadsheet.php') !== false) {
-			$new_links = array(
-				'support' => '<a href="https://codeboxr.com/php-spreadsheet-library-wordpress-plugin/" target="_blank">' . esc_html__(
-					'Support',
-					'cbxphpspreadsheet'
-				) . '</a>',
-				'doc' => '<a href="https://phpspreadsheet.readthedocs.io/en/latest/" target="_blank">' . esc_html__(
-					'PHP Spreadsheet Doc',
-					'cbxphpspreadsheet'
-				) . '</a>'
-			);
-
-			$links = array_merge($links, $new_links);
-		}
-
-		return $links;
-	}
-
-}//end method CBXPhpSpreadSheet
-
-
+/**
+ * Initialize the plugin
+ */
 function cbxphpspreadsheet_load_plugin()
 {
-	new CBXPhpSpreadSheet();
+    new CBXPhpSpreadSheet();
 }
 
 add_action('plugins_loaded', 'cbxphpspreadsheet_load_plugin', 5);
