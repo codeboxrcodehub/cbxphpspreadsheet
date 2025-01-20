@@ -7,7 +7,7 @@ namespace Cbx\Phpspreadsheet;
  */
 class Hooks {
 	public function __construct() {
-		$this->update_checker();
+		//$this->update_checker();
 	}
 
 	/**

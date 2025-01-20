@@ -5,6 +5,63 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com)
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+# 2025-01-11 - 1.29.8
+
+### Deprecated
+
+- Worksheet::getHashCode is no longer needed.
+
+### Fixed
+
+- Backported security patch for Html navigation.
+- Change hash code for worksheet. Backport of [PR #4207](https://github.com/PHPOffice/PhpSpreadsheet/pull/4207)
+- Retitling cloned worksheets. Backport of [PR #4302](https://github.com/PHPOffice/PhpSpreadsheet/pull/4302)
+
+# 2024-12-26 - 1.29.7
+
+### Deprecated
+
+- Drawing::setIsUrl is unneeded. The property is set when setPath determines whether path is a url.
+
+### Fixed
+
+- More context options may be needed for http(s) image. Backport of [PR #4276](https://github.com/PHPOffice/PhpSpreadsheet/pull/4276)
+- Backported security patches for Samples.
+- Backported security patches for Html Writer.
+
+## 1.29.6 - 2024-12-08
+
+### Fixed
+
+- Fix Minor Break Handling Drawings. Backport of [PR #4244](https://github.com/PHPOffice/PhpSpreadsheet/pull/4244)
+- Upgrade locked version of Tcpdf (security advisory).
+- Upgrade locked version of Dompdf (Php8.4 compatibility).
+- Remove unnecessary files from Composer package.
+
+## 1.29.5 - 2024-11-22
+
+### Changed
+
+- Settings::libXmlLoaderOptions is ignored. Backport of [PR #4233](https://github.com/PHPOffice/PhpSpreadsheet/pull/4233)
+
+### Deprecated
+
+- Settings::setLibXmlLoaderOptions() and Settings::getLibXmlLoaderOptions() are no longer needed - no replacement.
+
+## 1.29.4 - 2024-11-10
+
+### Fixed
+
+- 1.29.3 omitted
+- Backported security patches.
+- Write ignoredErrors Tag Before Drawings. Backport of [PR #4212](https://github.com/PHPOffice/PhpSpreadsheet/pull/4212) intended for 3.4.0.
+- Changes to ROUNDDOWN/ROUNDUP/TRUNC. Backport of [PR #4214](https://github.com/PHPOffice/PhpSpreadsheet/pull/4214) intended for 3.4.0.
+- Replace str_starts_with in Drawing. [Issue #4215](https://github.com/PHPOffice/PhpSpreadsheet/issues/4215)
+
+### Added
+
+- Method to Test Whether Csv Will Be Affected by Php9. Backport of [PR #4189](https://github.com/PHPOffice/PhpSpreadsheet/pull/4189)  intended for 3.4.0.
+
 ## 1.29.2 - 2024-09-29
 
 ### Fixed
