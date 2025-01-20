@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CBX PhpSpreadSheet Library\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-26 11:26+0000\n"
+"POT-Creation-Date: 2025-01-20 12:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -15,48 +15,41 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.2.2; wp-5.2"
 
-#: cbxphpspreadsheet.php:74
-msgid "This plugin requires PHP version 7.4 or newer"
-msgstr ""
-
-#: cbxphpspreadsheet.php:85
-msgid "This plugin requires PHP php_zip extension installed and enabled"
-msgstr ""
-
-#: cbxphpspreadsheet.php:95
-msgid "This plugin requires PHP php_xml extension installed and enabled"
-msgstr ""
-
-#: cbxphpspreadsheet.php:105
-msgid "This plugin requires PHP php_gd2 extension installed and enabled"
-msgstr ""
-
-#: cbxphpspreadsheet.php:172
-msgid "Support"
-msgstr ""
-
-#: cbxphpspreadsheet.php:173
-msgid "PHP Spreadsheet Doc"
-msgstr ""
-
-#. Name of the plugin
-msgid "CBX PhpSpreadSheet Library"
-msgstr ""
-
 #. Description of the plugin
 msgid ""
 "A pure PHP library for reading and writing spreadsheet files https:"
 "//phpspreadsheet.readthedocs.io/"
 msgstr ""
 
-#. URI of the plugin
-msgid "https://codeboxr.com/php-spreadsheet-library-wordpress-plugin/"
+#. Name of the plugin
+msgid "CBX PhpSpreadSheet Library"
+msgstr ""
+
+#: cbxphpspreadsheet.php:70
+msgid ""
+"CBX PhpSpreadSheet Library plugin requires PHP extensions: Zip, XML, and GD2."
+msgstr ""
+
+#: cbxphpspreadsheet.php:66
+msgid "CBX PhpSpreadSheet Library plugin requires PHP version 8.1.99 or newer."
 msgstr ""
 
 #. Author of the plugin
 msgid "Codeboxr"
 msgstr ""
 
+#. URI of the plugin
+msgid "https://codeboxr.com/php-spreadsheet-library-wordpress-plugin/"
+msgstr ""
+
 #. Author URI of the plugin
 msgid "https://github.com/PHPOffice/PhpSpreadsheet"
+msgstr ""
+
+#: cbxphpspreadsheet.php:154
+msgid "PHP Spreadsheet Doc"
+msgstr ""
+
+#: cbxphpspreadsheet.php:153
+msgid "Support"
 msgstr ""

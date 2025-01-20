@@ -23,10 +23,10 @@ The plugin check php version, php_zip, php_xml and php_gd2 library compatible or
 How to use:
 
 ````
-if ( defined('CBXPHPSPREADSHEET_PLUGIN_NAME') && file_exists( CBXPHPSPREADSHEET_ROOT_PATH . 'lib/vendor/autoload.php' ) ) {
+if ( defined('CBXPHPSPREADSHEET_PLUGIN_NAME') && cbxphpspreadsheet_loadable() ) {
 
 	//Include PHPExcel
-	require_once( CBXPHPSPREADSHEET_ROOT_PATH . 'lib/vendor/autoload.php' );
+	require_once( CBXPHPSPREADSHEET_ROOT_PATH . 'lib/vendor/autoload.php' ); //or use 'cbxphpspreadsheet_load();'
 
 	//now take instance
 	$objPHPExcel = new \PhpOffice\PhpSpreadsheet\Spreadsheet();

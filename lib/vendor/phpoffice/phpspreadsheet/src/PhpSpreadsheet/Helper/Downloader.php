@@ -4,6 +4,12 @@ namespace PhpOffice\PhpSpreadsheet\Helper;
 
 use PhpOffice\PhpSpreadsheet\Exception;
 
+/**
+ * Assist downloading files when samples are run in browser.
+ * Never run as part of unit tests, which are command line.
+ *
+ * @codeCoverageIgnore
+ */
 class Downloader
 {
     protected string $filepath;
@@ -35,7 +41,7 @@ class Downloader
 
         $filetype ??= pathinfo($filename, PATHINFO_EXTENSION);
         if (array_key_exists(strtolower($filetype), self::CONTENT_TYPES) === false) {
-            throw new Exception('Invalid filetype: cannot be downloaded');
+            throw new Exception('Invalid filetype: file cannot be downloaded');
         }
         $this->filetype = strtolower($filetype);
     }
@@ -49,7 +55,13 @@ class Downloader
 
     public function headers(): void
     {
-        ob_clean();
+        // I cannot tell what this ob_clean is paired with.
+        // I have never seen a problem with it, but someone has - issue 3739.
+        // Perhaps it should be removed altogether,
+        // but making it conditional seems harmless, and safer.
+        if ((int) ob_get_length() > 0) {
+            ob_clean();
+        }
 
         $this->contentType();
         $this->contentDisposition();
