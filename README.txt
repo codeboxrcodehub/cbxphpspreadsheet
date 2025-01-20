@@ -1,8 +1,8 @@
 === CBX PhpSpreadSheet Library ===
 Contributors: codeboxr, manchumahara
-Requires at least: 3.5
-Tested up to: 6.6.2
-Stable tag: 1.0.6
+Requires at least: 5.3
+Tested up to: 6.7.1
+Stable tag: 1.0.8
 License: MIT
 License URI: https://github.com/codeboxrcodehub/cbxphpspreadsheet/blob/master/LICENSE.txt
 
@@ -31,9 +31,10 @@ The plugin check php version, php_zip, php_xml and php_gd2 library compatible or
 How to use:
 
 `
-if ( defined('CBXPHPSPREADSHEET_PLUGIN_NAME') && file_exists( CBXPHPSPREADSHEET_ROOT_PATH . 'lib/vendor/autoload.php' ) ) {
+if ( defined('CBXPHPSPREADSHEET_PLUGIN_NAME') && cbxphpspreadsheet_loadable() ) {
+
 	//Include PHPExcel
-	require_once( CBXPHPSPREADSHEET_ROOT_PATH . 'lib/vendor/autoload.php' );
+	require_once( CBXPHPSPREADSHEET_ROOT_PATH . 'lib/vendor/autoload.php' ); //or use 'cbxphpspreadsheet_load();'
 
 	//now take instance
 	$objPHPExcel = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -51,6 +52,13 @@ if ( defined('CBXPHPSPREADSHEET_PLUGIN_NAME') && file_exists( CBXPHPSPREADSHEET_
 
 
 == Changelog ==
+= 1.0.8 =
+* Dependency vendor packages updated to latest
+* Added some helper functions for better environment checking
+
+= 1.0.7 =
+* Dependency vendor packages updated to latest
+
 = 1.0.6 =
 * Dependency vendor packages updated to latest
 

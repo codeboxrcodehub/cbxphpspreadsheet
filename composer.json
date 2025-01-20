@@ -7,7 +7,7 @@
     "vendor-dir": "lib/vendor"
   },
   "require": {
-    "phpoffice/phpspreadsheet": "^1.29",
+    "phpoffice/phpspreadsheet": "^3.8",
     "myclabs/php-enum": "^1.8",
     "symfony/polyfill-mbstring": "^1.28"
   },
