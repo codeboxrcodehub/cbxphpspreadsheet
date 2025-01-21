@@ -61,8 +61,9 @@ jobs:
             exit 1
           fi
 
-          # Use printf to handle newlines correctly and escape special characters
-          printf "RELEASE_NOTES<<EOF\n%s\nEOF\n" "$release_notes" >> $GITHUB_ENV
+          # Escape special characters and set the RELEASE_NOTES environment variable correctly
+          release_notes_escaped=$(echo "$release_notes" | awk '{printf "%s\\n", $0}')
+          echo "RELEASE_NOTES=$release_notes_escaped" >> $GITHUB_ENV
           source $GITHUB_ENV  # Ensure the environment variable is available for subsequent steps
 
       - name: Create zip file
