@@ -9,36 +9,47 @@ on:
 
 jobs:
   tag:
-    name: Deploy Plugin Tag
+    name: Prepare Release
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' # Only run on push events
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Important: Fetch all history for tags
 
-      - name: Debug File List
-        run: ls -R
+      - name: Get latest commit SHA
+        id: sha
+        if: github.ref == 'refs/heads/master' # Only when pushing to master
+        run: echo "::set-output name=sha::$(git rev-parse HEAD)"
 
-      - name: Find Readme File
-        id: find_readme
+      - name: Create Tag (if needed)
+        id: create_tag
+        if: github.ref == 'refs/heads/master' && !startsWith(github.event.head_commit.message, 'Merge pull request') #Only on direct pushes to master, not merge commits
         run: |
-          readme_file=$(find . -type f -iname "readme.*" | head -n 1)
-          if [ -n "$readme_file" ]; then
-            echo "Readme file found: $readme_file"
-            echo "readme_file=$readme_file" >> $GITHUB_ENV
-          else
-            echo "::error::Readme file not found."
-            exit 1
-          fi
+          TAG_NAME="v$(date +%Y%m%d%H%M%S)-${{ steps.sha.outputs.sha }}"
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git tag -a "$TAG_NAME" -m "Release from master ${{ steps.sha.outputs.sha }}"
+          git push origin --tags
+          echo "::set-output name=tag::$TAG_NAME"
 
       - name: Extract Release Notes
         id: release_notes
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/'))
         run: |
           # Define variables
           changelog_section_start="== Changelog =="
-          current_tag="${{ github.ref_name }}"
-          readme_file="${{ env.readme_file }}"
+          current_tag="${{ steps.create_tag.outputs.tag || github.ref_name }}" # Use created tag or existing tag
+          readme_file=$(find . -type f -iname "readme.*" | head -n 1)
 
-          # Extract version from tag (strip 'refs/tags/' if it exists)
+          if [ -z "$readme_file" ]; then
+            echo "::error::Readme file not found."
+            exit 1
+          fi
+          echo "Readme file: $readme_file"
+
+          # Extract version from tag
           version=${current_tag#refs/tags/}
 
           # Initialize variables
@@ -58,19 +69,22 @@ jobs:
               continue
             fi
 
-            # Start capturing if the line matches the current version
-            if [[ "$line" == "= $version =" ]]; then
+            # Start capturing if the line starts with a version number (semver format)
+            if [[ "$line" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
               capturing_version=1
-              release_notes+="$line\n"
+              # Check if the captured version matches the current tag
+              if [[ "$line" == "$version" ]]; then
+                release_notes+="$line\n"
+              fi
               continue
             fi
 
-            # Stop capturing when a new version is detected
-            if [[ $capturing_version -eq 1 && "$line" =~ ^= ]]; then
+            # Stop capturing when a new version section is detected
+            if [[ $capturing_version -eq 1 && "$line" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
               break
             fi
 
-            # Add the line to the release notes if we are capturing
+            # Add the line to the release notes if capturing the current version
             if [[ $capturing_version -eq 1 ]]; then
               release_notes+="$line\n"
             fi
@@ -89,17 +103,12 @@ jobs:
           # Set output for release notes
           echo "::set-output name=notes::$(printf "%b" "$release_notes")"
 
-      - name: Debug Release Notes
-        run: |
-          echo "Debugging Release Notes:"
-          echo "${{ steps.release_notes.outputs.notes }}"
-
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/'))
         with:
-          tag_name: ${{ github.ref_name }}
+          tag_name: ${{ steps.create_tag.outputs.tag || github.ref_name }}
           body: ${{ steps.release_notes.outputs.notes }}
           files: ${{github.workspace}}/${{ github.event.repository.name }}.zip
-
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
