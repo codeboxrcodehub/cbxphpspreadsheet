@@ -5,11 +5,11 @@ on:
     tags:
       - '*.*.*'
     branches:
-      - master  # Restrict tags to master branch
+      - master
 
 jobs:
   create_release:
-    if: github.ref == 'refs/heads/master'  # Ensure the job only runs for master
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -26,6 +26,10 @@ jobs:
               break
             fi
           done
+
+          # Ensure the variable is available within the current step
+          source $GITHUB_ENV
+
           if [ -z "$readme_file" ]; then
             echo "::error::Readme file not found."
             exit 1
@@ -70,6 +74,9 @@ jobs:
           REPO_NAME=$(basename `git rev-parse --show-toplevel`)
           zip -r ${REPO_NAME}.zip . -x '*.git*' -x '.github/*' -x '*.distignore*' -x 'CHANGELOG.txt'
           echo "repo_name=${REPO_NAME}" >> $GITHUB_ENV
+
+          # Source to make repo_name available in subsequent steps
+          source $GITHUB_ENV
 
       - name: Create Release
         id: create_release
