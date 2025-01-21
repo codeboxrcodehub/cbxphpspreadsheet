@@ -35,6 +35,12 @@ jobs:
         sed -n "${START_LINE},${END_LINE}p" readme.txt | sed '1d;$d' > CHANGELOG.txt
         echo "changelog=$(cat CHANGELOG.txt)" >> $GITHUB_ENV
 
+    - name: Create zip file
+      run: |
+        REPO_NAME=$(basename `git rev-parse --show-toplevel`)
+        zip -r ${REPO_NAME}.zip . -x '*.git*' -x '*.github*'
+        echo "repo_name=${REPO_NAME}" >> $GITHUB_ENV
+
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -46,3 +52,13 @@ jobs:
         body: ${{ env.changelog }}
         draft: false
         prerelease: false
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./${{ env.repo_name }}.zip
+        asset_name: ${{ env.repo_name }}.zip
+        asset_content_type: application/zip
