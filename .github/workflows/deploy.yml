@@ -9,6 +9,7 @@ on:
 
 jobs:
   create_release:
+    if: github.ref == 'refs/heads/master'  # Ensures the job runs only on master branch
     runs-on: ubuntu-latest
 
     steps:
@@ -38,7 +39,7 @@ jobs:
     - name: Create zip file
       run: |
         REPO_NAME=$(basename `git rev-parse --show-toplevel`)
-        zip -r ${REPO_NAME}.zip . -x '*.git*' -x '*.github*'
+        zip -r ${REPO_NAME}.zip . -x '*.git*' -x '*.github*' -x '*.distignore*'
         echo "repo_name=${REPO_NAME}" >> $GITHUB_ENV
 
     - name: Create Release
