@@ -4,9 +4,12 @@ on:
   push:
     tags:
       - '*.*.*'
+    branches:
+      - master  # Restrict tags to master branch
 
 jobs:
   create_release:
+    if: github.ref == 'refs/heads/master'  # Ensure the job only runs for master
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -32,12 +35,11 @@ jobs:
         id: release_notes
         run: |
           changelog_section_start="== Changelog =="
-          readme_file="${{ env.readme_file }}"
+          readme_file="$readme_file"
           plugin_version="${{ github.ref_name }}"  # Assuming the tag is the version
 
           in_changelog=0
           release_notes=""
-
           while IFS= read -r line; do
             if [[ "$line" == "$changelog_section_start" ]]; then
               in_changelog=1
@@ -58,15 +60,10 @@ jobs:
             exit 1
           fi
 
-          # Save release notes to GITHUB_ENV in a safe way
+          # Use the <<EOF syntax to handle multi-line environment variables correctly
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
           printf "%s\n" "$release_notes" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
-
-      - name: Debug Release Notes
-        run: |
-          echo "Extracted Release Notes:"
-          echo "${{ env.RELEASE_NOTES }}"
 
       - name: Create zip file
         run: |
