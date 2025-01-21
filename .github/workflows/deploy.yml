@@ -37,6 +37,7 @@ jobs:
         run: |
           changelog_section_start="== Changelog =="
           readme_file="$readme_file"
+          plugin_version="${{ github.ref_name }}"  # Assuming the tag is the version
 
           in_changelog=0
           release_notes=""
@@ -60,8 +61,8 @@ jobs:
             exit 1
           fi
 
-          # Use printf to handle newlines correctly
-          echo -e "RELEASE_NOTES=$release_notes" >> $GITHUB_ENV
+          # Use printf to handle newlines correctly and escape special characters
+          printf "RELEASE_NOTES<<EOF\n%s\nEOF\n" "$release_notes" >> $GITHUB_ENV
           source $GITHUB_ENV  # Ensure the environment variable is available for subsequent steps
 
       - name: Create zip file
