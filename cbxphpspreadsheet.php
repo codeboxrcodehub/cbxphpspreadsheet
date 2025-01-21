@@ -16,7 +16,7 @@
  * Plugin Name:       CBX PhpSpreadSheet Library
  * Plugin URI:        https://codeboxr.com/php-spreadsheet-library-wordpress-plugin/
  * Description:       A pure PHP library for reading and writing spreadsheet files https://phpspreadsheet.readthedocs.io/
- * Version:           1.0.8
+ * Version:           1.0.9
  * Requires PHP:      8.1.99
  * Author:            Codeboxr
  * Author URI:        https://github.com/PHPOffice/PhpSpreadsheet
@@ -33,7 +33,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 defined( 'CBXPHPSPREADSHEET_PLUGIN_NAME' ) or define( 'CBXPHPSPREADSHEET_PLUGIN_NAME', 'cbxphpspreadsheet' );
-defined( 'CBXPHPSPREADSHEET_PLUGIN_VERSION' ) or define( 'CBXPHPSPREADSHEET_PLUGIN_VERSION', '1.0.8' );
+defined( 'CBXPHPSPREADSHEET_PLUGIN_VERSION' ) or define( 'CBXPHPSPREADSHEET_PLUGIN_VERSION', '1.0.9' );
 defined( 'CBXPHPSPREADSHEET_BASE_NAME' ) or define( 'CBXPHPSPREADSHEET_BASE_NAME', plugin_basename( __FILE__ ) );
 defined( 'CBXPHPSPREADSHEET_ROOT_PATH' ) or define( 'CBXPHPSPREADSHEET_ROOT_PATH', plugin_dir_path( __FILE__ ) );
 defined( 'CBXPHPSPREADSHEET_ROOT_URL' ) or define( 'CBXPHPSPREADSHEET_ROOT_URL', plugin_dir_url( __FILE__ ) );
@@ -109,8 +109,7 @@ class CBXPhpSpreadSheet {
 	 * @return bool
 	 */
 	private static function php_version_check() {
-		//return version_compare( PHP_VERSION, '8.1.99', '>=' );
-		return false;
+		return version_compare( PHP_VERSION, '8.1.99', '>=' );
 	}//end method php_version_check
 
 	/**
