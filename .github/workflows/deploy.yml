@@ -25,6 +25,10 @@ jobs:
     - name: Get latest tag
       id: get_latest_tag
       run: |
+        if [ $(git tag -l | wc -l) -eq 0 ]; then
+          echo "No tags found"
+          exit 1
+        fi
         LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
         echo "latest_tag=$LATEST_TAG" >> $GITHUB_ENV
 
