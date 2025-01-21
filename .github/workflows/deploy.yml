@@ -4,12 +4,9 @@ on:
   push:
     tags:
       - '*.*.*'
-    branches:
-      - master
 
 jobs:
   create_release:
-    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -26,7 +23,6 @@ jobs:
               break
             fi
           done
-          source $GITHUB_ENV
           if [ -z "$readme_file" ]; then
             echo "::error::Readme file not found."
             exit 1
@@ -36,11 +32,12 @@ jobs:
         id: release_notes
         run: |
           changelog_section_start="== Changelog =="
-          readme_file="$readme_file"
+          readme_file="${{ env.readme_file }}"
           plugin_version="${{ github.ref_name }}"  # Assuming the tag is the version
 
           in_changelog=0
           release_notes=""
+
           while IFS= read -r line; do
             if [[ "$line" == "$changelog_section_start" ]]; then
               in_changelog=1
@@ -61,18 +58,21 @@ jobs:
             exit 1
           fi
 
-          # Use the <<EOF syntax to handle multi-line environment variables correctly
+          # Save release notes to GITHUB_ENV in a safe way
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
-          echo -e "$release_notes" >> $GITHUB_ENV
+          printf "%s\n" "$release_notes" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
-          source $GITHUB_ENV  # Ensure the environment variable is available for subsequent steps
+
+      - name: Debug Release Notes
+        run: |
+          echo "Extracted Release Notes:"
+          echo "${{ env.RELEASE_NOTES }}"
 
       - name: Create zip file
         run: |
           REPO_NAME=$(basename `git rev-parse --show-toplevel`)
           zip -r ${REPO_NAME}.zip . -x '*.git*' -x '.github/*' -x '*.distignore*' -x 'CHANGELOG.txt'
           echo "repo_name=${REPO_NAME}" >> $GITHUB_ENV
-          source $GITHUB_ENV  # Ensure the environment variable is available for subsequent steps
 
       - name: Create Release
         id: create_release
