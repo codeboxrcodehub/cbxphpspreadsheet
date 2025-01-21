@@ -18,11 +18,6 @@ jobs:
       - name: Debug File List
         run: ls -R
 
-      - name: Install SVN (Subversion)
-        run: |
-          sudo apt-get update
-          sudo apt-get install subversion
-
       - name: Find Readme File
         id: find_readme
         run: |
