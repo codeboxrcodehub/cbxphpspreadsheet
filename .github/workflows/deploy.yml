@@ -46,7 +46,7 @@ jobs:
               continue
             fi
 
-            if [[ $in_changelog -eq 1 && $(echo "$line" | grep -E '^==') ]]; then
+            if [[ $in_changelog -eq 1 && "$line" =~ ^== ]]; then
               break
             fi
 
@@ -60,7 +60,8 @@ jobs:
             exit 1
           fi
 
-          echo "RELEASE_NOTES=$release_notes" >> $GITHUB_ENV
+          # Use printf to handle newlines correctly
+          echo -e "RELEASE_NOTES=$release_notes" >> $GITHUB_ENV
           source $GITHUB_ENV  # Ensure the environment variable is available for subsequent steps
 
       - name: Create zip file
