@@ -4,12 +4,12 @@ on:
   push:
     tags:
       - '*.*.*'
-    #branches:
-    #  - master
+    branches:
+      - master
 
 jobs:
   create_release:
-    #if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -26,7 +26,8 @@ jobs:
               break
             fi
           done
-          if [ -z "${{ env.readme_file }}" ]; then
+          source $GITHUB_ENV
+          if [ -z "$readme_file" ]; then
             echo "::error::Readme file not found."
             exit 1
           fi
@@ -35,7 +36,7 @@ jobs:
         id: release_notes
         run: |
           changelog_section_start="== Changelog =="
-          readme_file="${{ env.readme_file }}"
+          readme_file="$readme_file"
 
           in_changelog=0
           release_notes=""
@@ -60,12 +61,14 @@ jobs:
           fi
 
           echo "RELEASE_NOTES=$release_notes" >> $GITHUB_ENV
+          source $GITHUB_ENV  # Ensure the environment variable is available for subsequent steps
 
       - name: Create zip file
         run: |
           REPO_NAME=$(basename `git rev-parse --show-toplevel`)
           zip -r ${REPO_NAME}.zip . -x '*.git*' -x '.github/*' -x '*.distignore*' -x 'CHANGELOG.txt'
           echo "repo_name=${REPO_NAME}" >> $GITHUB_ENV
+          source $GITHUB_ENV  # Ensure the environment variable is available for subsequent steps
 
       - name: Create Release
         id: create_release
