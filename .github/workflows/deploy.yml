@@ -28,7 +28,7 @@ jobs:
       id: get_latest_tag
       run: |
         git fetch --tags  # Ensure all tags are fetched
-        LATEST_TAG=$(git tag -l --sort=-v:refname | head -n 1)
+        LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
         if [ -z "$LATEST_TAG" ]; then
           echo "No tags found"
           exit 1
@@ -55,7 +55,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ env.latest_tag }}
+        tag_name: ${{ env.plugin_version }}  # Use the plugin version as the tag name
         release_name: "Release ${{ env.plugin_version }}"
         body: ${{ env.changelog }}
         draft: false
