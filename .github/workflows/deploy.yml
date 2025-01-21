@@ -40,13 +40,22 @@ jobs:
       run: |
         START_LINE=$(grep -n "== Changelog ==" readme.txt | cut -d : -f 1)
         END_LINE=$(grep -n "= ${{ env.plugin_version }} =" readme.txt | cut -d : -f 1)
+        if [ -z "$START_LINE" ] || [ -z "$END_LINE" ]; then
+          echo "Changelog not found"
+          exit 1
+        fi
         sed -n "${START_LINE},${END_LINE}p" readme.txt | sed '1d;$d' > CHANGELOG.txt
-        echo "changelog=$(cat CHANGELOG.txt)" >> $GITHUB_ENV
+        CHANGELOG_CONTENT=$(cat CHANGELOG.txt)
+        if [ -z "$CHANGELOG_CONTENT" ]; then
+          echo "Changelog content is empty"
+          exit 1
+        fi
+        echo "changelog=$CHANGELOG_CONTENT" >> $GITHUB_ENV
 
     - name: Create zip file
       run: |
         REPO_NAME=$(basename `git rev-parse --show-toplevel`)
-        zip -r ${REPO_NAME}.zip . -x '*.git*' -x '*.github*' -x '*.distignore*'
+        zip -r ${REPO_NAME}.zip . -x '*.git*' -x '*.github*' -x '*.distignore*' -x 'CHANGELOG.txt'
         echo "repo_name=${REPO_NAME}" >> $GITHUB_ENV
 
     - name: Create Release
@@ -55,7 +64,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ env.plugin_version }}  # Use the plugin version as the tag name
+        tag_name: ${{ env.latest_tag }}
         release_name: "Release ${{ env.plugin_version }}"
         body: ${{ env.changelog }}
         draft: false
