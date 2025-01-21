@@ -2,6 +2,8 @@ name: Deploy to GitHub
 
 on:
   push:
+    branches:
+      - master
     tags:
       - "*"
 
