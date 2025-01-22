@@ -102,7 +102,8 @@ jobs:
           # Write the release notes with actual line breaks
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
           echo -e "$release_notes" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV           
+          echo "EOF" >> $GITHUB_ENV
+      
 
       - name: Create zip file
         run: |
