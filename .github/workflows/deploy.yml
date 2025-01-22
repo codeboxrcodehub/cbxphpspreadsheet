@@ -72,7 +72,7 @@ jobs:
             fi
 
             # Break if a new version header is found after the current version
-            if [[ $found_version -eq 1 && "$line" =~ ^\= [0-9]+\.[0-9]+\.[0-9]+ \=$ ]]; then
+            if [[ $found_version -eq 1 && "$line" =~ ^\= [0-9]+\.[0-9]+\.[0-9]+\ =$ ]]; then
               echo "DEBUG: Found a new version header. Stopping collection."
               break
             fi
@@ -102,7 +102,7 @@ jobs:
           # Write the release notes with actual line breaks
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
           echo -e "$release_notes" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV      
       
 
       - name: Create zip file
