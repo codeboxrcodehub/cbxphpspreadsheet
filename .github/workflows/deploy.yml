@@ -45,32 +45,48 @@ jobs:
           in_changelog=0
           found_version=0
           release_notes=""
+
+          echo "DEBUG: Starting to extract release notes from $readme_file for version $plugin_version."
+
           while IFS= read -r line; do
+            echo "DEBUG: Processing line: $line"
+
             # Start processing after the changelog header
             if [[ "$line" == "$changelog_section_start" ]]; then
               in_changelog=1
+              echo "DEBUG: Found changelog section header."
               continue
             fi
 
             # Skip if not in changelog section
             if [[ $in_changelog -eq 0 ]]; then
+              echo "DEBUG: Skipping line (not in changelog section)."
               continue
             fi
 
             # Check for the current version header
             if [[ "$line" == "= ${plugin_version} =" ]]; then
               found_version=1
+              echo "DEBUG: Found version header for $plugin_version."
               continue
             fi
 
-            # Stop when another version header is encountered
-            if [[ $found_version -eq 1 && "$line" =~ ^=.+=$ ]]; then
+            # Break if a new version header is found after the current version
+            if [[ $found_version -eq 1 && "$line" =~ ^\= [0-9]+\.[0-9]+\.[0-9]+ \=$ ]]; then
+              echo "DEBUG: Found a new version header. Stopping collection."
               break
             fi
 
             # Collect lines starting with '*' if we are in the current version section
             if [[ $found_version -eq 1 && "$line" =~ ^\* ]]; then
+              echo "DEBUG: Found changelog entry: $line"
               release_notes+="${line}\n"
+              continue
+            fi
+
+            # Log skipped lines in the current version section
+            if [[ $found_version -eq 1 ]]; then
+              echo "DEBUG: Skipping line (not a changelog entry): $line"
             fi
           done < "$readme_file"
 
@@ -79,11 +95,14 @@ jobs:
             exit 1
           fi
 
+          echo "DEBUG: Successfully extracted release notes."
+          echo "DEBUG: Release notes content:"
+          echo -e "$release_notes"
+
           # Write the release notes with actual line breaks
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
           echo -e "$release_notes" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV     
-      
+          echo "EOF" >> $GITHUB_ENV           
 
       - name: Create zip file
         run: |
