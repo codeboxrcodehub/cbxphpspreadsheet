@@ -41,6 +41,8 @@ jobs:
           changelog_section_start="== Changelog =="
           readme_file="$readme_file"
           plugin_version="${{ github.ref_name }}"  # Assuming the tag is the version
+          
+          echo "DEBUG: Plugin latest version found $plugin_version."
 
           in_changelog=0
           found_version=0
