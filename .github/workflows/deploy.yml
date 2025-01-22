@@ -45,17 +45,22 @@ jobs:
           in_changelog=0
           release_notes=""
           while IFS= read -r line; do
+            # Start capturing lines after the changelog header
             if [[ "$line" == "$changelog_section_start" ]]; then
               in_changelog=1
               continue
             fi
 
-            if [[ $in_changelog -eq 1 && "$line" =~ ^== ]]; then
-              break
+            # Stop if another version header is encountered
+            if [[ $in_changelog -eq 1 && "$line" =~ ^=[[:space:]] ]]; then
+              if [[ "$line" != "=${plugin_version} ="* ]]; then
+                break
+              fi
             fi
 
+            # Append the relevant lines for the latest changelog
             if [[ $in_changelog -eq 1 && -n "$line" ]]; then
-              release_notes+="$line\n"
+              release_notes+="${line}\n"
             fi
           done < "$readme_file"
 
@@ -64,10 +69,11 @@ jobs:
             exit 1
           fi
 
-          # Use the <<EOF syntax to handle multi-line environment variables correctly
+          # Write the release notes with actual line breaks
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
-          printf "%s\n" "$release_notes" >> $GITHUB_ENV
+          echo -e "$release_notes" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
+      
 
       - name: Create zip file
         run: |
