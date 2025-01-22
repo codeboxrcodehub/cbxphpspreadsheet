@@ -52,7 +52,6 @@ if ( defined('CBXPHPSPREADSHEET_PLUGIN_NAME') && cbxphpspreadsheet_loadable() ) 
 
 
 == Changelog ==
-
 = 1.0.9 =
 * Fixed function 'php_version_check'
 

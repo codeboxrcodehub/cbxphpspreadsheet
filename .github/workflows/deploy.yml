@@ -51,11 +51,9 @@ jobs:
               continue
             fi
 
-            # Stop if another version header is encountered
-            if [[ $in_changelog -eq 1 && "$line" =~ ^=[[:space:]] ]]; then
-              if [[ "$line" != "=${plugin_version} ="* ]]; then
-                break
-              fi
+            # Stop if another version header is encountered, but continue if it's the current version
+            if [[ $in_changelog -eq 1 && "$line" =~ ^=[[:space:]] && "$line" != "= ${plugin_version} ="* ]]; then
+              break
             fi
 
             # Append the relevant lines for the latest changelog
@@ -72,7 +70,7 @@ jobs:
           # Write the release notes with actual line breaks
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
           echo -e "$release_notes" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV     
       
 
       - name: Create zip file
