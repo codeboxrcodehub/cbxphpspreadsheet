@@ -72,13 +72,13 @@ jobs:
             fi
 
             # Break if a new version header is found after the current version
-            if [[ $found_version -eq 1 && "$line" =~ ^\= [0-9]+\.[0-9]+\.[0-9]+\ =$ ]]; then
+            if [[ $found_version -eq 1 ]] && echo "$line" | grep -qE '^= [0-9]+\.[0-9]+\.[0-9]+ =$'; then
               echo "DEBUG: Found a new version header. Stopping collection."
               break
             fi
 
             # Collect lines starting with '*' if we are in the current version section
-            if [[ $found_version -eq 1 && "$line" =~ ^\* ]]; then
+            if [[ $found_version -eq 1 ]] && echo "$line" | grep -qE '^\*'; then
               echo "DEBUG: Found changelog entry: $line"
               release_notes+="${line}\n"
               continue
