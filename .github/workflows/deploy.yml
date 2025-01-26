@@ -3,13 +3,14 @@ name: Create Release
 on:
   push:
     tags:
-      - '*.*.*'
-    branches:
-      - master
+      - '*.*.*'  # Match semantic versioning tags
+    # Removed branches trigger to ensure it only runs on tags
+    # branches:
+    #   - master
 
 jobs:
   create_release:
-    if: github.ref == 'refs/heads/master'
+    # No need to check against branches, workflow only triggers on tags
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -40,10 +41,15 @@ jobs:
         run: |
           changelog_section_start="== Changelog =="
           readme_file="$readme_file"
-          #plugin_version="${{ github.ref_name }}"  # Assuming the tag is the version
-          plugin_version="${GITHUB_REF#refs/tags/}"          
-          
-          echo "DEBUG: Plugin latest version found $plugin_version."
+
+          # Extract the tag name from GITHUB_REF (plugin_version)
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            plugin_version="${GITHUB_REF#refs/tags/}"
+            echo "DEBUG: Plugin latest version found: $plugin_version."
+          else
+            echo "::error::This workflow must be triggered by a tag push."
+            exit 1
+          fi
 
           in_changelog=0
           found_version=0
@@ -105,8 +111,7 @@ jobs:
           # Write the release notes with actual line breaks
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
           echo -e "$release_notes" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV      
-      
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Create zip file
         run: |
