@@ -20,7 +20,7 @@ jobs:
       - name: Find Readme File
         id: find_readme
         run: |
-          for file in README.txt README.md Readme.txt Readme.md readme.txt readme.md; do
+          for file in readme.txt Readme.txt README.txt README.md Readme.md readme.md; do
             if [ -f "$file" ]; then
               echo "Readme file found: $file"
               echo "readme_file=$file" >> $GITHUB_ENV
