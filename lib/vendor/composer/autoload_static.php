@@ -33,6 +33,7 @@ class ComposerStaticInit00806fe69736e9cf42743640feeffa67
         ),
         'C' => 
         array (
+            'Composer\\Pcre\\' => 14,
             'Complex\\' => 8,
             'Cbx\\Phpspreadsheet\\' => 19,
         ),
@@ -71,6 +72,10 @@ class ComposerStaticInit00806fe69736e9cf42743640feeffa67
         'Matrix\\' => 
         array (
             0 => __DIR__ . '/..' . '/markbaker/matrix/classes/src',
+        ),
+        'Composer\\Pcre\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/pcre/src',
         ),
         'Complex\\' => 
         array (

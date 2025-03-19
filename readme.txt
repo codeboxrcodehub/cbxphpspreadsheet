@@ -1,8 +1,8 @@
 === CBX PhpSpreadSheet Library ===
 Contributors: codeboxr, manchumahara
 Requires at least: 5.3
-Tested up to: 6.7.1
-Stable tag: 1.0.9
+Tested up to: 6.7.2
+Stable tag: 1.0.10
 License: MIT
 License URI: https://github.com/codeboxrcodehub/cbxphpspreadsheet/blob/master/LICENSE.txt
 
@@ -52,34 +52,12 @@ if ( function_exists( 'cbxphpspreadsheet_loadable' ) && cbxphpspreadsheet_loadab
 
 
 == Changelog ==
+= 1.0.10 =
+* Updated php package phpoffice/phpspreadsheet to 3.9.1
+
 = 1.0.9 =
 * Fixed function 'php_version_check'
 
 = 1.0.8 =
 * Dependency vendor packages updated to latest
 * Added some helper functions for better environment checking
-
-= 1.0.7 =
-* Dependency vendor packages updated to latest
-
-= 1.0.6 =
-* Dependency vendor packages updated to latest
-
-= 1.0.5 =
-* Dependency vendor packages updated to latest
-* Github.com based updater
-
-= 1.0.4 =
-* Updated the phpspreadsheet package to latest V1.29.0
-
-= 1.0.3 =
-* Updated the phpspreadsheet package to latest V1.21.0
-
-= 1.0.2 =
-* Updated the phpspreadsheet package to latest V1.21.0 
-
-= 1.0.1 =
-* Updated the phpspreadsheet package to latest
-
-= 1.0.0 =
-* First public release
