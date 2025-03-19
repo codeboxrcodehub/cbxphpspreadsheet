@@ -31,7 +31,7 @@ The plugin check php version, php_zip, php_xml and php_gd2 library compatible or
 How to use:
 
 `
-if ( defined('CBXPHPSPREADSHEET_PLUGIN_NAME') && cbxphpspreadsheet_loadable() ) {
+if ( function_exists( 'cbxphpspreadsheet_loadable' ) && cbxphpspreadsheet_loadable() ) {
 
 	//Include PHPExcel
 	require_once( CBXPHPSPREADSHEET_ROOT_PATH . 'lib/vendor/autoload.php' ); //or use 'cbxphpspreadsheet_load();'
