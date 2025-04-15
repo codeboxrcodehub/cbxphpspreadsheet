@@ -16,7 +16,7 @@
  * Plugin Name:       CBX PhpSpreadSheet Library
  * Plugin URI:        https://codeboxr.com/php-spreadsheet-library-wordpress-plugin/
  * Description:       A pure PHP library for reading and writing spreadsheet files https://phpspreadsheet.readthedocs.io/
- * Version:           1.0.11
+ * Version:           1.0.12
  * Requires PHP:      8.1.99
  * Author:            Codeboxr
  * Author URI:        https://github.com/PHPOffice/PhpSpreadsheet
@@ -33,7 +33,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 defined( 'CBXPHPSPREADSHEET_PLUGIN_NAME' ) or define( 'CBXPHPSPREADSHEET_PLUGIN_NAME', 'cbxphpspreadsheet' );
-defined( 'CBXPHPSPREADSHEET_PLUGIN_VERSION' ) or define( 'CBXPHPSPREADSHEET_PLUGIN_VERSION', '1.0.11' );
+defined( 'CBXPHPSPREADSHEET_PLUGIN_VERSION' ) or define( 'CBXPHPSPREADSHEET_PLUGIN_VERSION', '1.0.12' );
 defined( 'CBXPHPSPREADSHEET_BASE_NAME' ) or define( 'CBXPHPSPREADSHEET_BASE_NAME', plugin_basename( __FILE__ ) );
 defined( 'CBXPHPSPREADSHEET_ROOT_PATH' ) or define( 'CBXPHPSPREADSHEET_ROOT_PATH', plugin_dir_path( __FILE__ ) );
 defined( 'CBXPHPSPREADSHEET_ROOT_URL' ) or define( 'CBXPHPSPREADSHEET_ROOT_URL', plugin_dir_url( __FILE__ ) );
@@ -51,7 +51,7 @@ class CBXPhpSpreadSheet {
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ]);
 		
 		// Add custom row meta links
-		add_filter( 'plugin_row_meta', [ $this, 'plugin_row_meta' ], 10, 2 );
+		add_filter( 'plugin_row_meta', [ $this, 'plugin_row_meta' ], 10, 4 );
 		add_action( 'admin_notices', [ $this, 'activation_error_display' ] );
 
 		add_filter( 'pre_set_site_transient_update_plugins', [
@@ -144,27 +144,33 @@ class CBXPhpSpreadSheet {
 	public static function environment_ready() {
 		return self::php_version_check() && self::extension_check(  [ 'zip', 'xml', 'gd' ]);
 	}//end method environment_ready
+	
 
 	/**
-	 * Add support and documentation links to the plugin row meta
+	 * Filters the array of row meta for each/specific plugin in the Plugins list table.
+	 * Appends additional links below each/specific plugin on the plugins page.
 	 *
-	 * @param array $links
-	 * @param string $file
+	 * @access  public
 	 *
-	 * @return array
+	 * @param  array  $links_array  An array of the plugin's metadata
+	 * @param  string  $plugin_file_name  Path to the plugin file
+	 * @param  array  $plugin_data  An array of plugin data
+	 * @param  string  $status  Status of the plugin
+	 *
+	 * @return  array       $links_array
 	 */
-	public function plugin_row_meta( $links, $file ) {
-		if ( strpos( $file, 'cbxphpspreadsheet.php' ) !== false ) {
-			$new_links = [
-				'support' => '<a href="https://codeboxr.com/php-spreadsheet-library-wordpress-plugin/" target="_blank">' . esc_html__( 'Support', 'cbxphpspreadsheet' ) . '</a>',
-				'doc'     => '<a href="https://phpspreadsheet.readthedocs.io/en/latest/" target="_blank">' . esc_html__( 'PHP Spreadsheet Doc', 'cbxphpspreadsheet' ) . '</a>',
-			];
+	public function plugin_row_meta( $links_array, $plugin_file_name, $plugin_data, $status ) {
+		if ( strpos( $plugin_file_name, CBXPHPSPREADSHEET_BASE_NAME ) !== false ) {
+			if ( ! function_exists( 'is_plugin_active' ) ) {
+				include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			}
 
-			$links = array_merge( $links, $new_links );
+			$links_array[] = '<a target="_blank" style="color:#005ae0 !important; font-weight: bold;" href="https://github.com/codeboxrcodehub/cbxphpspreadsheet" aria-label="' . esc_attr__( 'Github Repo', 'cbxphpspreadsheet' ) . '">' . esc_html__( 'Github Repo', 'cbxphpspreadsheet' ) . '</a>';
+			$links_array[] = '<a target="_blank" style="color:#005ae0 !important; font-weight: bold;" href="https://github.com/codeboxrcodehub/cbxphpspreadsheet/releases" aria-label="' . esc_attr__( 'Download', 'cbxphpspreadsheet' ) . '">' . esc_html__( 'Download Latest', 'cbxphpspreadsheet' ) . '</a>';
 		}
 
-		return $links;
-	}
+		return $links_array;
+	}//end plugin_row_meta
 
 	/**
 	 * Load textdomain

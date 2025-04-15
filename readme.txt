@@ -2,7 +2,7 @@
 Contributors: codeboxr, manchumahara
 Requires at least: 5.3
 Tested up to: 6.8
-Stable tag: 1.0.11
+Stable tag: 1.0.12
 License: MIT
 License URI: https://github.com/codeboxrcodehub/cbxphpspreadsheet/blob/master/LICENSE.txt
 
@@ -52,6 +52,9 @@ if ( function_exists( 'cbxphpspreadsheet_loadable' ) && cbxphpspreadsheet_loadab
 
 
 == Changelog ==
+= 1.0.12 =
+* [updated] Plugin's important link/help url display improved
+
 = 1.0.11 =
 * [updated] Added plugin update checker
 

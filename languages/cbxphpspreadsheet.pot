@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CBX PhpSpreadSheet Library\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-20 12:00+0000\n"
+"POT-Creation-Date: 2025-04-15 17:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -25,17 +25,29 @@ msgstr ""
 msgid "CBX PhpSpreadSheet Library"
 msgstr ""
 
-#: cbxphpspreadsheet.php:70
+#: cbxphpspreadsheet.php:77
 msgid ""
 "CBX PhpSpreadSheet Library plugin requires PHP extensions: Zip, XML, and GD2."
 msgstr ""
 
-#: cbxphpspreadsheet.php:66
+#: cbxphpspreadsheet.php:73
 msgid "CBX PhpSpreadSheet Library plugin requires PHP version 8.1.99 or newer."
 msgstr ""
 
 #. Author of the plugin
 msgid "Codeboxr"
+msgstr ""
+
+#: cbxphpspreadsheet.php:169
+msgid "Download"
+msgstr ""
+
+#: cbxphpspreadsheet.php:169
+msgid "Download Latest"
+msgstr ""
+
+#: cbxphpspreadsheet.php:168
+msgid "Github Repo"
 msgstr ""
 
 #. URI of the plugin
@@ -44,12 +56,4 @@ msgstr ""
 
 #. Author URI of the plugin
 msgid "https://github.com/PHPOffice/PhpSpreadsheet"
-msgstr ""
-
-#: cbxphpspreadsheet.php:154
-msgid "PHP Spreadsheet Doc"
-msgstr ""
-
-#: cbxphpspreadsheet.php:153
-msgid "Support"
 msgstr ""
