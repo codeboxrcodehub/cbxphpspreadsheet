@@ -55,8 +55,8 @@ class Formatter extends BaseFormatter
         //   4 sections:  [POSITIVE] [NEGATIVE] [ZERO] [TEXT]
         $sectionCount = count($sections);
         // Colour could be a named colour, or a numeric index entry in the colour-palette
-        $color_regex = '/\\[(' . implode('|', Color::NAMED_COLORS) . '|color\\s*(\\d+))\\]/mui';
-        $cond_regex = '/\\[(>|>=|<|<=|=|<>)([+-]?\\d+([.]\\d+)?)\\]/';
+        $color_regex = '/\[(' . implode('|', Color::NAMED_COLORS) . '|color\s*(\d+))\]/mui';
+        $cond_regex = '/\[(>|>=|<|<=|=|<>)([+-]?\d+([.]\d+)?)\]/';
         $colors = ['', '', '', '', ''];
         $conditionOperations = ['', '', '', '', ''];
         $conditionComparisonValues = [0, 0, 0, 0, 0];
@@ -126,22 +126,32 @@ class Formatter extends BaseFormatter
         }
         // For now we do not treat strings in sections, although section 4 of a format code affects strings
         // Process a single block format code containing @ for text substitution
-        $formatx = str_replace('\\"', self::QUOTE_REPLACEMENT, $format);
+        $formatx = str_replace('\"', self::QUOTE_REPLACEMENT, $format);
         if (preg_match(self::SECTION_SPLIT, $format) === 0 && preg_match(self::SYMBOL_AT, $formatx) === 1) {
             if (!str_contains($format, '"')) {
-                return str_replace('@', $value, $format);
+                $temp = str_replace('@', $value, $format);
+                if (is_callable($callBack)) {
+                    $temp = $callBack($temp, $format);
+                }
+
+                return $temp;
             }
             //escape any dollar signs on the string, so they are not replaced with an empty value
             $value = str_replace(
                 ['$', '"'],
-                ['\\$', self::QUOTE_REPLACEMENT],
+                ['\$', self::QUOTE_REPLACEMENT],
                 (string) $value
             );
+            $temp = preg_replace(self::SYMBOL_AT, $value, $formatx) ?? $value;
+            if (is_callable($callBack)) {
+                $temp = $callBack($temp, $formatx);
+            }
+            /** @var string $temp */
 
             return str_replace(
                 ['"', self::QUOTE_REPLACEMENT],
                 ['', '"'],
-                preg_replace(self::SYMBOL_AT, $value, $formatx) ?? $value
+                $temp
             );
         }
 
@@ -160,7 +170,7 @@ class Formatter extends BaseFormatter
         $format = (string) preg_replace('/^\[\$-[^\]]*\]/', '', $format);
 
         $format = (string) preg_replace_callback(
-            '/(["])(?:(?=(\\\\?))\\2.)*?\\1/u',
+            '/(["])(?:(?=(\\\?))\2.)*?\1/u',
             fn (array $matches): string => str_replace('.', chr(0x00), $matches[0]),
             $format
         );
